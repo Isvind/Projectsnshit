@@ -1,0 +1,90 @@
+package rpgtxt;
+import java.util.*;
+ 
+public class Battle {
+ 
+	public void bMain(Player player, Monster monster)
+	{
+		System.out.println("A " +monster.mName+ " has attacked!");	
+		player.hp = player.getHP();
+		monster.hp = monster.getHP(player);
+		while (monster.hp > 0)
+		{
+			if (monster.hp > 0)
+			{
+				wrAttack(player, monster);
+			}
+			if (player.hp > 0)
+			{
+				mAttack(player, monster);
+			}
+ 
+		} 
+ 
+	}
+ 
+	public void wrAttack(Player player, Monster monster)
+	{
+		Scanner keyIn = new Scanner(System.in);
+		System.out.println("You attack!");
+		Random roll = new Random();
+		int rvalue = roll.nextInt( 21 );
+		int mBlock = monster.getBlock(player);
+		System.out.println(monster.mName+" has "+monster.hp+" hp.");
+		keyIn.nextLine();
+		if (rvalue == 20)
+		{
+			System.out.println("Critical hit!");
+			monster.hp = monster.hp - (player.dmg * 2);
+			System.out.println(monster.mName+" has "+monster.hp+" hp.");
+			player.xp = player.xp + 1000;
+			keyIn.nextLine();
+		}
+		else if (rvalue > mBlock)
+		{
+			System.out.println("You strike!");
+			monster.hp = monster.hp - player.dmg;
+			System.out.println(monster.mName+" has "+monster.hp+" hp.");
+			player.xp = player.xp + 500;
+			keyIn.nextLine();
+		}
+		else if (rvalue < mBlock)
+		{
+			System.out.println("You miss!");
+			keyIn.nextLine();
+		}
+ 
+	}
+ 
+	public void mAttack(Player player, Monster monster)
+	{
+		Scanner keyIn = new Scanner(System.in);
+		System.out.println(monster.mName+" attacks!");
+		Random roll = new Random();
+		int rvalue = roll.nextInt( 21 );
+		int block = player.getBlock();
+		System.out.println("You have "+player.hp+" hp.");
+		monster.dmg = monster.getDMG(player);
+		keyIn.nextLine();
+		if (rvalue == 20)
+		{
+			System.out.println("Critical hit!");
+			player.hp = player.hp - (monster.dmg * 2);
+			System.out.println("You have "+player.hp+" hp.");
+			keyIn.nextLine();
+		}
+		else if (rvalue > block)
+		{
+			System.out.println(monster.mName+" strikes!");
+			player.hp = player.hp - monster.dmg;
+			System.out.println("You have "+player.hp+" hp.");
+			keyIn.nextLine();
+		}
+		else if (rvalue < block)
+		{
+			System.out.println(monster.mName+" misses!");
+			keyIn.nextLine();
+		}
+	}
+}
+//http://www.javaprogrammingforums.com/whats-wrong-my-code/23523-help-battle-system.html

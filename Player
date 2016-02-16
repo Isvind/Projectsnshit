@@ -1,0 +1,52 @@
+package basicfightingsystem;
+
+import java.util.*;
+
+public class Player {
+	public static void playern(String Playername) {
+		Playername.equals("You");
+	}
+
+	static Random sword = new Random();
+	static Random block = new Random();
+	public static int swordh;
+	public static int php = 20;
+	public static int blocked;
+	public String playername;
+public static boolean blocking;
+	Fightmain caller = new Fightmain();
+	Wolf wclass = new Wolf();
+	
+	public static void pattacks() {
+		System.out.println("You swing your sword");
+		blocking = false;
+	}
+
+	public static void playerhits() {
+		System.out.println("you hit!");
+		swordh = 1 + sword.nextInt(6);
+		System.out.println("You have hit for " + swordh + " Damage!");
+		blocking = false;
+	}
+
+	public static void playermiss() {
+		System.out.println("You have missed!");
+		blocking = false;
+	}
+
+	public static void pcritical() {
+		System.out.println("Critical Hit!");
+		swordh = 2 * sword.nextInt(6);
+		System.out.println("You have hit for " + swordh + "Damage! Ouch!");
+		blocking = false;
+	}
+
+	public static void pblocks() {
+		System.out.println("You block!");
+		blocking = true; System.out.println("DEBUG: Blocking set to..." + blocking);
+		blocked = 1+block.nextInt(4);
+		System.out.println("You have blocked this (" + blocked + ") Damage! Phew!");
+
+	}
+
+}

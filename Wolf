@@ -1,0 +1,35 @@
+package basicfightingsystem;
+
+import java.util.*;
+
+public class Wolf {
+	static Random claw = new Random();
+	public static int clawh;
+	public static int wolfhp = 20;
+	public String wolfname;
+
+	public void wolf(String wolfname1) {
+		wolfname.equals("Wolf");
+
+	}
+
+	public void wolfbleed() {
+		System.out.println("Wolf bleeds!");
+	}
+
+	public static void wolfhits() {
+		System.out.println("wolf hits!");
+		clawh = 1+claw.nextInt(4);
+		System.out.println("Wolf has hit you for " + clawh + " Damage!");
+		
+	}public static void wolfmiss(){
+		System.out.println("Wolf has missed!");
+		
+	}public static void wolfenraged(){
+		System.out.println("Wolf is enraged!");
+		clawh = 3+claw.nextInt(4);
+		System.out.println("Wolf has hit you for " + clawh + "Damage! Ouch!");
+		
+	}
+
+}

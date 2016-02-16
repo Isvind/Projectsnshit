@@ -1,0 +1,85 @@
+package basicfightingsystem;
+
+import java.util.*;
+
+public class Fightmain {
+	public static void main(String[] Args) throws InterruptedException {
+		Random tohit = new Random(20);
+		Scanner action = new Scanner(System.in);
+		int paction;
+		int hit = 0;
+		int diceresult = 8;
+
+		Player pclass = new Player();
+		Wolf Wclass = new Wolf();
+
+		System.out.println("You have encountered a wolf!");
+		Thread.sleep(500);
+
+		do {
+			if (pclass.php < 1) {
+				System.out.println("You feel your spirit leaves you...");
+				System.out.println("You die and go to Valhalla");
+				break;
+			}
+			System.out.println("You have: " + pclass.php + "HP. \t " + "Wolf has " + Wclass.wolfhp + "HP");
+			System.out.println("What do you wanna do?");
+			System.out.println("1: Block! \t 2: Attack with sword");
+			paction = action.nextInt();
+
+			Thread.sleep(500);
+			if (paction == 2) {
+				System.out.println("You attack!");
+				pclass.pattacks();
+				hit = 1 + tohit.nextInt(20);
+				Thread.sleep(500);
+				if (diceresult < hit) {
+					pclass.playerhits();
+					Wclass.wolfhp = Wclass.wolfhp - pclass.swordh;
+					System.out.println("Wolf has " + Wclass.wolfhp + "HP");
+					Thread.sleep(500);
+
+				} else if (diceresult > hit) {
+					pclass.playermiss();
+					Thread.sleep(500);
+				} else if (hit >= 18) {
+					pclass.pcritical();
+					Wclass.wolfhp = Wclass.wolfhp - pclass.swordh;
+				}
+			}
+			if (paction == 1) {
+				Player.pblocks();
+			}
+			Thread.sleep(500);
+			if (Wclass.wolfhp < 1) {
+				System.out.println("Wolf got hit fatally for " + pclass.swordh + " Damage!");
+				System.out.println("Wolf faints...");
+				break;
+			}
+			System.out.println("Wolf attacks!");
+			hit = 1 + tohit.nextInt(20);
+			if (diceresult < hit && pclass.blocking == (false)) {
+				Wolf.wolfhits();
+				pclass.php = pclass.php - Wolf.clawh;
+				System.out.println("You have " + pclass.php + "HP left");
+				Thread.sleep(500);
+			} else if (diceresult > hit) {
+				Wolf.wolfmiss();
+				Thread.sleep(500);
+			} else if (diceresult >= 16) {
+				Wolf.wolfenraged();
+			}
+			if (diceresult < hit && pclass.blocking == (true)) {
+				System.out.println("Wolf attacks while you block!");
+				Wolf.wolfhits();
+				pclass.php = pclass.php - Wolf.clawh + pclass.blocked;
+				System.out.println("You have " + pclass.php + "HP left");
+			}
+			Thread.sleep(500);
+
+		} while (Wclass.wolfhp >= 1);
+		Thread.sleep(500);
+
+	}
+
+}
